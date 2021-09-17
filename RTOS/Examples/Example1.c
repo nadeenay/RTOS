@@ -9,34 +9,27 @@
 #include "task.h"
 #define FIRST_STACK        128
 
-void delay(void ) //not best practice
-{
-  int i = 1000000;
-    while (i > 0)
-    {
-      i--;
-    }
-}
+
 
 void First_Task(void *pvParameters)
 {
     while(1)
     {    /*Turn the red led*/
-        GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3, 0x02);
+        GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_1, GPIO_PIN_1);
 
 
         /*Delay */
         SysCtlDelay(2000000);
 
         /*Turn the blue*/
-        GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3, GPIO_PIN_2);
+        GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_2, GPIO_PIN_2);
 
         /*Delay */
         SysCtlDelay(2000000);
 
         /*Turn the green */
 
-        GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_3|GPIO_PIN_2|GPIO_PIN_1, 0x08);
+        GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_3,GPIO_PIN_3);
 
         /*Delay */
         SysCtlDelay(2000000);
