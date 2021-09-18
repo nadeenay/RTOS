@@ -88,13 +88,13 @@ void RGB(void * para)
         switch(Rec_Char)
         {
         case 'r':
-            GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_1,GPIO_PIN_1);
+            GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3,GPIO_PIN_1);
 
         case 'b':
-            GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_2,GPIO_PIN_2);
+            GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_2|GPIO_PIN_1|GPIO_PIN_3,GPIO_PIN_2);
 
         case 'g':
-            GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_3,GPIO_PIN_3);
+            GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_3|GPIO_PIN_1|GPIO_PIN_2,GPIO_PIN_3);
         }
         IS_Send=false;
         xSemaphoreGive( sem2);
@@ -181,6 +181,12 @@ void TaskState1(void *para)
 
 
     UART0_Config();
+     
+   /*Enable the Clock for PortF */
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
+
+    /*Make Pin 1,2,3 as Output Pin */
+    GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE,GPIO_PIN_2 | GPIO_PIN_1 | GPIO_PIN_3);
 
 
     /* Create Handles */
