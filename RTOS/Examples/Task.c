@@ -52,25 +52,22 @@ void UART0_Send_Int(uint8_t i)
 
 void UART_Task(void * para)
 {
-
     while(1)
     {
-    /* this task have a high priority so create the mutex here */
-        sem2= xSemaphoreCreateBinary();
 
     /* check if there is a value to receive */
     if(UARTCharsAvail(UART0_BASE)) /*There is an Char in the FIFO*/
         {
-          xSemaphoreTake( sem2,(TickType_t )0);
-           uint8_t Rec_Char =(uint8_t)(UARTCharGetNonBlocking(UART0_BASE));
+
+           Rec_Char =(uint8_t)(UARTCharGetNonBlocking(UART0_BASE));
            UARTCharPut(UART0_BASE,Rec_Char);
            UARTCharPut(UART0_BASE,'\r');
            UARTCharPut(UART0_BASE,'\n');
-           IS_Send=true;
-           xSemaphoreGive( sem2);
-        }
-    vTaskDelay(100); /* Delay for 100ms */
+           xSemaphoreGive(sem2);
 
+
+        }
+   // vTaskDelay(100); /* Delay for 100ms */
     }
 
 
@@ -79,31 +76,33 @@ void UART_Task(void * para)
 
 void RGB(void * para)
 {
+    /* this task have a high priority so create the mutex here */
+     sem2= xSemaphoreCreateBinary();
     while(1)
     {
-    if(IS_Send) /*There is an Char in the FIFO*/
+    UART0_Send_String("please enter character r or g or b");
+    if(xSemaphoreTake( sem2,(TickType_t)portMAX_DELAY)) /*There is an Char in the FIFO*/
     {
         /* We can put here a mutex because of the shred recourse IS_Send */
-        xSemaphoreTake( sem2,(TickType_t )0);
         switch(Rec_Char)
         {
+        //GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_2,GPIO_PIN_2);
         case 'r':
-            GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_1,GPIO_PIN_1);
+            GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3,GPIO_PIN_1);
+            break;
 
         case 'b':
-            GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_2,GPIO_PIN_2);
+            GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3,GPIO_PIN_2);
+            break;
 
         case 'g':
-            GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_3,GPIO_PIN_3);
+            GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3,GPIO_PIN_3);
+            break;
+
+
         }
-        IS_Send=false;
-        xSemaphoreGive( sem2);
-
     }
-
     }
-
-
 }
 
 
@@ -187,10 +186,9 @@ void TaskState1(void *para)
     TaskHandle_t  UART_Task_handle,RGB_handle,TaskState1_handle;
 
     /* Create 3 Tasks */
-    xTaskCreate(RGB, "RGB",Task_Stack_Size, NULL,1, &RGB_handle);
-    xTaskCreate(UART_Task, "UART_Task",Task_Stack_Size, NULL,2, &UART_Task_handle);
+    xTaskCreate(RGB, "RGB",Task_Stack_Size, NULL,2, &RGB_handle);
+    xTaskCreate(UART_Task, "UART_Task",Task_Stack_Size, NULL,1, &UART_Task_handle);
     xTaskCreate(TaskState1, "TaskState1",Task_Stack_Size, NULL,3, &TaskState1_handle);
-
 
     /* Start Scheduler */
     vTaskStartScheduler();
