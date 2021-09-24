@@ -22,21 +22,21 @@ void First_Task(void *pvParameters)
 {
     while(1)
     {    /*Turn the red led*/
-        GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_1, GPIO_PIN_1);
+        GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3, 0x02);
 
 
         /*Delay */
         SysCtlDelay(2000000);
 
         /*Turn the blue*/
-        GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_2, GPIO_PIN_2);
+        GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3, GPIO_PIN_2);
 
         /*Delay */
         SysCtlDelay(2000000);
 
         /*Turn the green */
 
-        GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_3, GPIO_PIN_3);
+        GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_3|GPIO_PIN_2|GPIO_PIN_1, 0x08);
 
         /*Delay */
         SysCtlDelay(2000000);

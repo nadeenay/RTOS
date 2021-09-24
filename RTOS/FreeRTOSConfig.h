@@ -14,7 +14,7 @@
 #define configCPU_CLOCK_HZ                      16000000
 #define configSYSTICK_CLOCK_HZ                  1000000
 #define configTICK_RATE_HZ                      250
-#define configMAX_PRIORITIES                    5
+#define configMAX_PRIORITIES                    6
 #define configMINIMAL_STACK_SIZE                128
 #define configMAX_TASK_NAME_LEN                 16
 #define configUSE_16_BIT_TICKS                  0
@@ -58,8 +58,10 @@
 #define configMAX_CO_ROUTINE_PRIORITIES         0
 
 /* Software timer related definitions. */
-#define configUSE_TIMERS                        0
-#define configTIMER_TASK_PRIORITY               3
+//#define USE_Timers
+
+#define configUSE_TIMERS                        1
+#define configTIMER_TASK_PRIORITY               5
 #define configTIMER_QUEUE_LENGTH                10
 #define configTIMER_TASK_STACK_DEPTH            configMINIMAL_STACK_SIZE
 

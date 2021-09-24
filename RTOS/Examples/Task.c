@@ -181,6 +181,12 @@ void TaskState1(void *para)
 
     UART0_Config();
 
+    /*Enable clock for portF*/
+    SysCtlPeripheralEnable(SYSCTL_PERIPH_GPIOF);
+
+     /*Define LEDs
+       *  as OUTPUTs */
+     GPIOPinTypeGPIOOutput(GPIO_PORTF_BASE,GPIO_PIN_1 |GPIO_PIN_2|GPIO_PIN_3);
 
     /* Create Handles */
     TaskHandle_t  UART_Task_handle,RGB_handle,TaskState1_handle;

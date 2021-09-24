@@ -29,20 +29,20 @@ uint8_t speed1 = 1;
 
 void button1(void * para)
 {
-    uint32_t data = 0;
-    uint8_t pre= 0x01 ; //to work on falling edge
-    while(1)
-    {
-        data=GPIOPinRead(GPIO_PORTF_BASE,GPIO_PIN_4);
-
-        if((data & GPIO_PIN_4)==0 & (pre ==1)) //active low , if button is pressed , and last time was high
+        uint32_t data = 0;
+        uint8_t pre= 0x01 ; //to work on falling edge
+        while(1)
         {
-            speed1 += 2 ;
-            speed1 = (speed1 > 10) ? 1 :speed1;
+            data=GPIOPinRead(GPIO_PORTF_BASE,GPIO_PIN_4);
+
+            if((data & GPIO_PIN_4)==0 & (pre ==1)) //active low , if button is pressed , and last time was high
+            {
+                speed1 += 2 ;
+                speed1 = (speed1 > 10) ? 1 :speed1;
+            }
+            pre = data;
+            vTaskDelay(25); //ever 25 tick, as 25 ms
         }
-        pre = data;
-        vTaskDelay(25); //ever 25 tick, as 25 ms
-    }
 
 }
 void led1(void * para)
