@@ -55,11 +55,7 @@ EventGroupHandle_t Group1;
 
 void MyTimer( TimerHandle_t Timer_Function1 )
 {
-    /*
-    static uint32_t state =GPIO_PIN_1;
-    GPIOPinWrite(GPIO_PORTF_BASE,GPIO_PIN_1|GPIO_PIN_2|GPIO_PIN_3,state);
-    state ^= GPIO_PIN_1;
-    */
+    
     /*static variables */
         static uint32_t l=0;
         static int32_t R=2;
