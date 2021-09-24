@@ -31,11 +31,14 @@ void Task1()
 
 void Task2()
 {
+    while(1)
+    {
     z++;
 
     /* if task 1 interrupt task2 in this point there will be a problem shared memory */
 
     l++;
+    }
 
 }
 
