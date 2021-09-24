@@ -1,5 +1,5 @@
 
-/*Description task :
+/*Task's Description :
  * In this task we have 4 Tasks run by the Scheduler with different priority and a Timer with priority (higher than the Tasks).
  * the User have to Enter :
  * r-->for blink the red LED
