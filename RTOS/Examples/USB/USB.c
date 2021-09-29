@@ -55,17 +55,17 @@ static void USB_setLineCoding(tLineCoding *psLineCoding)
 /*these handlers are High level handlers for the USB buffers
  * what does it mean ?
  * when the data sent from the USB host this data go to the bulk endpoint then
- * is an Receive event will happen to notify the USB buffers that there is data
+ * there is an Receive event will happen to notify the USB buffers that there is data
  * they should receive in the Rxbuffer this is the first event then the second event to
  * inform the  CDC device that there is a data in the Rxbuffer the application can receive it */
 
 /*what happen if the data send from the USB host ? Not sure !!
  * 1-data go to the bulkOut Endpoint (lower layer of the USB) between USB driver and the USB host
- * 2-the function in g_sRxBuffer (buffer created for the application ) USBDCDCPacketRead will be called to receive the data
+ * 2-the function in g_sRxBuffer (buffer created for the application ) which is called USBDCDCPacketRead will be called to receive the data from USB endpoint
  * 3-this function puts the data in g_pui8USBRxBuffer in g_sRxBuffer
  * 4- USBBufferEventCallback handler then will be called
  * 5- this handler put the data in the ringbuffers witch the application can get data from it
- * 6- RxHandler will be called to put (in receive handler put the code you want for specific APP)
+ * 6- RxHandler will be called (in receive handler put the code you want for specific APP)
  */
 
 /***************************************************************************************/
